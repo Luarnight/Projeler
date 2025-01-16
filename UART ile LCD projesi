@@ -1,0 +1,79 @@
+# Proje Adı: UART ve LCD Entegrasyonu ile Timer Uygulaması
+
+## Proje Amacı
+Bu proje, bir mikrodenetleyici (Tiva C serisi) kullanarak UART iletişimi, ADC (Analog-Dijital Çevirici) okuma ve bir LCD ekranı üzerinde zamanlayıcı tabanlı bir saat görüntüleme uygulamasını gerçekleştirir. Proje, hem gelen UART verilerini LCD ekranına yazarken hem de ADC ile okunan değerleri UART üzerinden gönderir.
+
+## Dosya Yapısı
+- **`main.c`**: Projenin ana kaynak kodunu içerir.
+- **Kullanılan Kütüpaneler:**
+  - `stdint.h` ve `stdbool.h`: Temel veri tipleri.
+  - `driverlib` modülleri: Mikrodenetleyici fonksiyonları (UART, GPIO, ADC vb.) için.
+  - `lcd.h`: LCD kontrolü için gerekli kütüpane.
+
+## Program Akışı
+1. **Sistem Saat Ayarı:**
+   - `SysCtlClockSet()` ile sistem saati ayarlanır (16 MHz kristal frekansı).
+
+2. **UART Konfigürasyonu:**
+   - UART, 115200 baud hızında, 8-bit veri uzunluğu ve tek stop biti ile konfigüre edilir.
+   - UART kesmeleri, gelen veriyi karşılamak için kullanılır.
+
+3. **Timer ve Zamanlayıcı:**
+   - Gelen UART verisi ile zamanlayıcının başlangıç değeri belirlenir.
+   - Zamanlayıcı her saniyede bir tetiklenerek LCD ekranını günceller.
+
+4. **ADC Entegrasyonu:**
+   - ADC, analog veriyi okur ve UART üzerinden gönderir.
+   - LCD ekranına ADC verisi de yazılır.
+
+5. **LCD Kullanımı:**
+   - LCD'ye gelen UART metin verileri yazılır.
+   - Kronometre ve ADC değerleri ayrı satırlarda görüntülenir.
+
+## Fonksiyonlar
+### `uart_ayari()`
+UART modülünü etkinleştirir ve gerekli pinleri UART fonksiyonlarına tahsis eder.
+
+### `diger_ayar()`
+UART kesmelerini etkinleştirir ve `serikesme` fonksiyonunu UART kesme işleyici olarak kaydeder.
+
+### `ADC_init()`
+ADC modülünü konfigüre eder ve kanal 0'da analog veriyi okur.
+
+### `ADCdegergonder(deger)`
+Okunan ADC değerini UART üzerinden ve LCD ekranına yazır.
+
+### `timer0Int()`
+Timer kesmelerini işler. Zamanı artırarak LCD ekranına ve UART'a aktarır. Zaman formatı (hh:mm:ss) olarak gösterilir.
+
+### `Lcdmetinyaz()`
+Gelen metni LCD ekranın ikinci satırına yazır.
+
+### `serikesme()`
+UART kesmeleriyle gelen veriyi okur ve işler. Zaman ve metin verilerini ayrışır.
+
+## Kullanım
+1. **Bağlantılar:**
+   - Tiva C'nin UART0 pinleri (PA0 - RX, PA1 - TX) harici UART cihazlarına bağlanmalı.
+   - LCD ekran GPIO pinlerine bağlanmalı (RS, E, D4-D7).
+   - ADC, analog sensörü okuyacak şekilde ayarlanmalı.
+
+2. **Kodun Derlenmesi ve Çalıştırılması:**
+   - Kod, bir IDE (Code Composer Studio gibi) kullanılarak derlenmeli ve Tiva C mikrodenetleyicisine yüklenmelidir.
+
+3. **Fonksiyon Testi:**
+   - UART üzerinden saat bilgisi ve metin verileri gzerinden saat bilgisi ve metin verileri g\u00fnderilmelidir.
+   - ADC verisi, analog sensörden okunarak LCD ve UART üzerinde doğrulanmalıdır.
+
+## Notlar
+- LCD kütüpanesinin (örn. `lcd.h`) projenin bulunduğu dizinde doğru bir şekilde yer aldığından emin olun.
+- UART üzerinden gelen verilerin formatı doğru olmalıdır.
+  - Saat verisi formatı: `%hh:mm:ss`.
+  - Metin verisi formatı: `{metin}`.
+- ADC okuma ve UART iletişimi hızlı bir şekilde tetiklenmektedir. Performans iyileştirmesi için gerekirse gecikmeler ayarlanabilir.
+
+## Geliştirme Önerileri
+- UART üzerinden gelen verilerin doğrulanması için hata kontrol mekanizması eklenebilir.
+- ADC okuma hassasiyetini arttırmak için birden fazla kanal desteği eklenebilir.
+- LCD üzerindeki zaman ve metin için tasarım geliştirilebilir.
+
