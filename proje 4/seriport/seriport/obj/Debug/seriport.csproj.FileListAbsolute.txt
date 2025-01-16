@@ -1,0 +1,8 @@
+C:\Users\USER\Documents\SharpDevelop Projects\seriport\seriport\bin\Debug\seriport.exe.config
+C:\Users\USER\Documents\SharpDevelop Projects\seriport\seriport\bin\Debug\seriport.exe
+C:\Users\USER\Documents\SharpDevelop Projects\seriport\seriport\bin\Debug\seriport.pdb
+C:\Users\USER\Documents\SharpDevelop Projects\seriport\seriport\obj\Debug\seriport.csprojResolveAssemblyReference.cache
+C:\Users\USER\Documents\SharpDevelop Projects\seriport\seriport\obj\Debug\seriport.MainForm.resources
+C:\Users\USER\Documents\SharpDevelop Projects\seriport\seriport\obj\Debug\seriport.csproj.GenerateResource.Cache
+C:\Users\USER\Documents\SharpDevelop Projects\seriport\seriport\obj\Debug\seriport.exe
+C:\Users\USER\Documents\SharpDevelop Projects\seriport\seriport\obj\Debug\seriport.pdb
