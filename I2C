@@ -1,0 +1,40 @@
+# Proje Adı: Tiva C Mikrodenetleyici Temel Kod Örneği
+
+## Proje Amacı
+Bu proje, Tiva C serisi bir mikrodenetleyici için temel bir yazılım yapısı sunmaktadır. Kodda şu an içerik bulunmamakla birlikte, geliştirme yapmak isteyen kullanıcılar için bir başlangıç noktası oluşturur.
+
+## Kullanılan Kütüpaneler
+- **`stdio.h`**: Standart girdi/çıktı işlemleri.
+- **`stdint.h`**: Sabit boyutlu veri tipleri için.
+- **Tiva C Donanım Başlıkları:**
+  - `inc/tm4c123gh6pm.h`: TM4C123GH6PM mikrodenetleyiciye özel donanım tanımları.
+
+## Kod Yapısı
+### `main` Fonksiyonu
+Programda bir `main` fonksiyonu bulunmaktadır ve bu fonksiyon şu an herhangi bir işlem yapmamaktadır:
+```c
+int main(void)
+{
+    return 0;
+}
+```
+Bu yapı, projeyi başlatma ve geliştirme için bir temel sağlar.
+
+## Nasıl Kullanılır?
+1. **Geliştirme Ortamı:**
+   - Code Composer Studio (CCS) veya Keil uVision gibi bir IDE kullanın.
+2. **Proje Oluşturma:**
+   - Bu kodu yeni bir Tiva C projesine dahil edin.
+   - Mikrodenetleyicinizin doğru bir şekilde ayarlandığından emin olun.
+3. **Derleme ve Yükleme:**
+   - Kod, Tiva C serisi bir mikrodenetleyiciye derlenip yüklenebilir.
+
+## Geliştirme Önerileri
+- GPIO pinleri için temel ayarımlar ekleyin.
+- Bir LED yanıp sönme uygulaması geliştirin.
+- UART veya ADC gibi modülleri entegre ederek projeyi genişletin.
+
+## Notlar
+- Mikrodenetleyici için doğru başlık dosyaların ve linker dosyasının kullanıldığından emin olun.
+- Kod şu an yalnızca bir temel sağladığından herhangi bir işlev sunmamaktadır.
+
