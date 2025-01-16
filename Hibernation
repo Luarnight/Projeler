@@ -1,0 +1,56 @@
+# Proje Adı: Hibernation Modu ile LED Kontrolü
+
+## Proje Amacı
+Bu proje, Tiva C serisi bir mikrodenetleyicinin hibernation (uyku) modunu kullanarak enerji tasarrufu sağlamaya odaklanmaktadır. Proje, uyku moduna geçmeden önce LED’lerin durumunu ayarlamaktadır ve uyandıktan sonra GPIO pinlerini korunmuş durumda kullanarak LED'leri kontrol etmeye devam etmektedir.
+
+## Kullanılan Donanım ve Yazılım Araçları
+- **Mikrodenetleyici**: TM4C123GH6PM (Tiva C LaunchPad)
+- **Kütüpaneler**:
+  - `driverlib`: TivaWare’in GPIO, SysCtl ve Hibernation işlemleri için gerekli kütüpaneleri.
+- **Giriş ve Çıkışlar**:
+  - PF1, PF2, PF3: LED çıkışları (Kırmızı, Mavi, Yeşil)
+  - PF4: Giriş butonu (Pull-up dirençli)
+
+## Program Akışı
+1. **Sistem Saati Konfigürasyonu:**
+   - `SysCtlClockSet()` fonksiyonu ile sistem saati 16 MHz kristal osilatöre ayarlanır.
+
+2. **GPIO Ayarları:**
+   - PF1, PF2 ve PF3 çıkış olarak ayarlanır (LED'ler).
+   - PF4, dahili pull-up direnç ile giriş olarak ayarlanır (buton).
+
+3. **Hibernation Modu Konfigürasyonu:**
+   - `HibernateEnableExpClk()`: Hibernation modülü etkinleştirilir.
+   - `HibernateGPIORetentionEnable()`: Uyku modundan sonra GPIO pinlerinin durumunu korur.
+   - `HibernateRTCSet()`: RTC (Gerçek Zaman Sayacı) değerini sıfırlar.
+   - `HibernateRTCMatchSet(0, 5)`: RTC sayacı 5 saniyeye ayarlanır, bu değere ulaşıldığında uyku modu sona erer.
+
+4. **Uyku ve Uyanma:**
+   - `HibernateWakeSet(HIBERNATE_WAKE_PIN | HIBERNATE_WAKE_RTC)`: Uyandırma koşulları, RTC eşleşmesi ve PF0 pini olarak ayarlanır.
+   - `HibernateRequest()`: Uyku moduna geçiş.
+
+5. **LED Kontrolü:**
+   - Uyku moduna girmeden önce LED'ler yanar ve 5 saniye beklenir.
+   - Uyku modundan çıkıldığında GPIO pinlerinin durumları korunur.
+
+## Nasıl Kullanılır?
+1. **Bağlantılar:**
+   - PF1, PF2 ve PF3 pinlerine LED'ler bağlanmalı.
+   - PF4 pini pull-up dirençli bir buton olarak kullanılmalı.
+
+2. **Kodun Derlenmesi ve Çalıştırılması:**
+   - Kod, bir IDE (Code Composer Studio gibi) kullanılarak derlenmeli ve mikrodenetleyiciye yüklenmelidir.
+
+3. **Test Aşamaları:**
+   - Mikrodenetleyici başlatıldığında LED'ler yanacak ve 5 saniye sonra uyku moduna geçilecektir.
+   - RTC veya PF0 pini tetiklendiğinde cihaz uyku modundan çıkar.
+
+## Notlar
+- Hibernation modunun doğru çalışması için mikrodenetleyicinin HIBERNATE modülünü desteklediğinden emin olun.
+- RTC eşleşmesi doğru ayarlanmadığında cihaz uyku modundan çıkmayabilir.
+
+## Geliştirme Önerileri
+- LED’lerin durumlarını RTC zamanlayıcısına bağlı olarak değiştirmek.
+- Buton kullanılarak uyku moduna manuel geçiş veya çıkış kontrolü eklemek.
+- Enerji tüketimini daha da azaltmak için GPIO pinlerini kapatmak.
+
