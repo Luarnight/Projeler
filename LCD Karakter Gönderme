@@ -1,0 +1,59 @@
+# Proje Adı: LCD ile Karakter Yazdırma Uygulaması
+
+## Proje Amacı
+Bu proje, Tiva C serisi bir mikrodenetleyici kullanarak bir LCD ekranına karakter yazdırmayı amaçlamaktadır. Kod, mikrodenetleyicinin GPIO portlarını kullanarak LCD ekranı kontrol eder ve belirli bir konuma bir karakter yazdırır.
+
+## Dosya Yapısı
+- **`main.c`**: Projenin ana kod dosyasıdır.
+- **LCD Kütüpanesi**: `lcd.h` başlık dosyası, LCD ekran kontrol fonksiyonlarını içermektedir.
+
+## Kullanılan Kütüpaneler
+- **TivaWare Kütüpaneleri**:
+  - `driverlib/gpio.h`: GPIO port kontrolü için.
+  - `driverlib/sysctl.h`: Sistem saati ve konfigürasyonu.
+  - `driverlib/interrupt.h`: Kesme kontrolü.
+  - `driverlib/pin_map.h`: Pin tanımlamaları.
+- **Donanım Dosyaları**:
+  - `hw_memmap.h`: Donanım bellek haritaları.
+  - `hw_types.h`: Donanım tip tanımları.
+  - `hw_gpio.h`: GPIO donanım tanımları.
+- **LCD Kütüpanesi**:
+  - `lcd.h`: LCD için temel fonksiyonlar.
+
+## Program Akışı
+1. **Sistem Saatinin Ayarlanması:**
+   - `SysCtlClockSet()` fonksiyonu kullanılarak sistem saati ayarlanır. 16 MHz kristal osilatör kullanılmıştır.
+
+2. **LCD Ayarları:**
+   - `LCDilkayarlar()` ile LCD başlatılır.
+   - `LCDfonksiyonayarla(0, 1, 0)` fonksiyonu ile LCD 4-bit modunda, 2 satır ve 5x8 karakter boyutunda konfigüre edilir.
+   - `LCDtemizle()` fonksiyonu ile LCD temizlenir.
+
+3. **LCD’ye Karakter Yazdırma:**
+   - `LCDgit(0, 0)` fonksiyonu ile LCD’nin 1. satır ve 1. sütun konumuna gidilir.
+   - `LCDkarakteryaz('b')` fonksiyonu ile bu konuma 'b' karakteri yazdırılır.
+
+4. **Sonsuz Döngü:**
+   - Program sonsuz bir döngüde bekler ve herhangi bir ek işlem yapmaz.
+
+## Nasıl Kullanılır?
+1. **Bağlantılar:**
+   - LCD ekranının veri ve kontrol pinlerini Tiva C GPIO portlarına bağlayın.
+   - LCD’nin uygun şekilde besleme (Vcc) ve toprak (GND) bağlantılarını yapın.
+
+2. **Kodun Derlenmesi ve Yüklenmesi:**
+   - Kod, bir IDE (Code Composer Studio gibi) kullanılarak derlenir ve mikrodenetleyiciye yüklenir.
+
+3. **LCD Çıktısı:**
+   - LCD’nin 1. satırının 1. konumunda 'b' karakteri görüntülenir.
+
+## Notlar
+- LCD ekranın düzgün çalışması için uygun bir LCD kütüpanesi gereklidir.
+- LCD ekranın bağlantıları doğru yapılmadığında karakter yazılmayabilir.
+- Şimdilik yalnızca bir karakter yazdırılmaktadır. Daha fazla karakter veya metin yazdırmak için kod geliştirilebilir.
+
+## Geliştirme Önerileri
+- LCD ekranına metin yazdırma fonksiyonları eklenebilir.
+- Kullanıcı girişleriyle LCD’deki konumlar değiştirilebilir.
+- Daha karmaşık bir uygulama için LCD’ye zaman veya sensör verileri yazdırılabilir.
+
